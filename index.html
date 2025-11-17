@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios</title>
+    <style>
+        .sec { display: none; margin-top: 20px; }
+        input { display:block; margin:5px 0; }
+        button { margin-top:5px; }
+    </style>
+</head>
+<body>
+
+<h1>Ejercicios en JavaScript</h1>
+
+<select id="menu" onchange="mostrarSeccion()">
+    <option value="">Selecciona un ejercicio</option>
+
+    <option value="mag">Astronomía - Brillo estelar (IF)</option>
+    <option value="dist">Astronomía - Distancias planetas (FOR)</option>
+    <option value="crat">Astronomía - Cráteres lunares (WHILE)</option>
+    <option value="body">Astronomía - Cuerpo celeste (SWITCH)</option>
+    <option value="lux">Astronomía - Luz (DO WHILE)</option>
+
+    <option value="aqi">Medio Ambiente - AQI (IF)</option>
+    <option value="ruido">Medio Ambiente - Ruido (FOR)</option>
+    <option value="fuego">Medio Ambiente - Focos de calor (WHILE)</option>
+    <option value="residuos">Medio Ambiente - Residuos (SWITCH)</option>
+    <option value="rio">Medio Ambiente - Río (DO WHILE)</option>
+
+    <option value="presion">Salud - Presión arterial (IF)</option>
+    <option value="tempPac">Salud - Temp pacientes (FOR)</option>
+    <option value="fiebre">Salud - Fiebre (WHILE)</option>
+    <option value="triage">Salud - TRIAGE (SWITCH)</option>
+    <option value="spo2">Salud - Saturación (DO WHILE)</option>
+</select>
+
+<div id="contenido">
+
+    <section id="mag" class="sec">
+        <h2>Brillo estelar</h2>
+        <input id="magInp" type="number" placeholder="Magnitud">
+        <button onclick="brillo()">Clasificar</button>
+        <p id="magOut"></p>
+    </section>
+
+    <section id="dist" class="sec">
+        <h2>Distancias de planetas</h2>
+        <input id="distCant" type="number" placeholder="Cuántas distancias?">
+        <button onclick="distancias()">Ingresar</button>
+        <p id="distOut"></p>
+    </section>
+
+    <section id="crat" class="sec">
+        <h2>Cráteres lunares</h2>
+        <button onclick="crateres()">Ingresar diámetros</button>
+        <p id="cratOut"></p>
+    </section>
+
+    <section id="body" class="sec">
+        <h2>Cuerpo celeste</h2>
+        <input id="bodyInp" type="number" placeholder="Código 1-5">
+        <button onclick="cuerpo()">Identificar</button>
+        <p id="bodyOut"></p>
+    </section>
+
+    <section id="lux" class="sec">
+        <h2>Nivel de luz</h2>
+        <button onclick="lux()">Registrar</button>
+        <p id="luxOut"></p>
+    </section>
+
+    <section id="aqi" class="sec">
+        <h2>Calidad del aire</h2>
+        <input id="aqiInp" type="number" placeholder="AQI">
+        <button onclick="calidadAire()">Clasificar</button>
+        <p id="aqiOut"></p>
+    </section>
+
+    <section id="ruido" class="sec">
+        <h2>Ruido ambiental</h2>
+        <input id="ruidoCant" type="number" placeholder="Cuántas mediciones?">
+        <button onclick="ruido()">Registrar</button>
+        <p id="ruidoOut"></p>
+    </section>
+
+    <section id="fuego" class="sec">
+        <h2>Focos de calor</h2>
+        <button onclick="fuegos()">Registrar temperaturas</button>
+        <p id="fuegoOut"></p>
+    </section>
+
+    <section id="residuos" class="sec">
+        <h2>Tipo de residuo</h2>
+        <input id="residInp" type="number" placeholder="Código 1-4">
+        <button onclick="residuo()">Clasificar</button>
+        <p id="residOut"></p>
+    </section>
+
+    <section id="rio" class="sec">
+        <h2>Nivel del río</h2>
+        <button onclick="rio()">Registrar</button>
+        <p id="rioOut"></p>
+    </section>
+
+    <section id="presion" class="sec">
+        <h2>Presión arterial</h2>
+        <input id="sis" type="number" placeholder="Sistólica">
+        <input id="dia" type="number" placeholder="Diastólica">
+        <button onclick="presion()">Clasificar</button>
+        <p id="presOut"></p>
+    </section>
+    <section id="tempPac" class="sec">
+        <h2>Temperatura pacientes</h2>
+        <input id="tempCant" type="number" placeholder="Cantidad">
+        <button onclick="tempPac()">Registrar</button>
+        <p id="tempOut"></p>
+    </section>
+
+    <section id="fiebre" class="sec">
+        <h2>Pacientes con fiebre</h2>
+        <button onclick="fiebre()">Registrar temperaturas</button>
+        <p id="fiebreOut"></p>
+    </section>
+
+    <section id="triage" class="sec">
+        <h2>TRIAGE</h2>
+        <input id="triInp" type="number" placeholder="Código 1-4">
+        <button onclick="triage()">Clasificar</button>
+        <p id="triOut"></p>
+    </section>
+
+    <section id="spo2" class="sec">
+        <h2>Saturación SpO2</h2>
+        <button onclick="spo2()">Registrar</button>
+        <p id="spo2Out"></p>
+    </section>
+
+</div>
+
+<script>
+function mostrarSeccion() {
+    let s = document.querySelectorAll(".sec")
+    s.forEach(x=>x.style.display="none")
+    let id = document.getElementById("menu").value
+    if(id) document.getElementById(id).style.display="block"
+}
+
+function brillo() {
+    let m = Number(document.getElementById("magInp").value)
+    let r = ""
+    if(m < 0) r="Extremadamente brillante"
+    else if(m < 1) r="Muy brillante"
+    else if(m < 2) r="Brillante"
+    else if(m < 6) r="Débil"
+    else r="No visible"
+    document.getElementById("magOut").innerHTML = r
+}
+
+function distancias() {
+    let c = Number(document.getElementById("distCant").value)
+    let sum = 0
+    for(let i=1;i<=c;i++){
+        let d = Number(prompt("Distancia "+i))
+        sum += d
+    }
+    document.getElementById("distOut").innerHTML = "Promedio: "+(sum/c)
+}
+
+function crateres() {
+    let cont = 0
+    let n = Number(prompt("Diámetro"))
+    while(n!=0){
+        if(n>50) cont++
+        n = Number(prompt("Diámetro"))
+    }
+    document.getElementById("cratOut").innerHTML = cont+" cráteres grandes"
+}
+
+function cuerpo() {
+    let c = Number(document.getElementById("bodyInp").value)
+    let t=""
+    switch(c){
+        case 1: t="Estrella"; break
+        case 2: t="Planeta"; break
+        case 3: t="Cometa"; break
+        case 4: t="Asteroide"; break
+        case 5: t="Galaxia"; break
+        default: t="Código inválido"
+    }
+    document.getElementById("bodyOut").innerHTML = t
+}
+
+function lux() {
+    let n, msg=""
+    do{
+        n = Number(prompt("Lux"))
+        if(n < 5) msg="Noche profunda"
+    } while(prompt("Más?")!="no")
+    document.getElementById("luxOut").innerHTML = msg
+}
+
+function calidadAire() {
+    let x = Number(document.getElementById("aqiInp").value)
+    let r=""
+    if(x<=50) r="Buena"
+    else if(x<=100) r="Moderada"
+    else if(x<=150) r="Dañina"
+    else r="Muy dañina"
+    document.getElementById("aqiOut").innerHTML = r
+}
+
+function ruido() {
+    let c = Number(document.getElementById("ruidoCant").value)
+    let sum=0
+    for(let i=1;i<=c;i++){
+        sum += Number(prompt("Ruido "+i))
+    }
+    document.getElementById("ruidoOut").innerHTML = "Promedio: "+(sum/c)
+}
+
+function fuegos() {
+    let cont=0
+    let t=Number(prompt("Temperatura"))
+    while(t!=0){
+        if(t>45) cont++
+        t = Number(prompt("Temperatura"))
+    }
+    document.getElementById("fuegoOut").innerHTML = cont+" focos"
+}
+
+function residuo() {
+    let c = Number(document.getElementById("residInp").value)
+    let r=""
+    switch(c){
+        case 1:r="Orgánico";break
+        case 2:r="Plástico";break
+        case 3:r="Papel/cartón";break
+        case 4:r="Vidrio";break
+        default:r="Código inválido"
+    }
+    document.getElementById("residOut").innerHTML = r
+}
+
+function rio() {
+    let al="", n
+    do{
+        n = Number(prompt("Nivel"))
+        if(n>3) al="Alerta"
+    } while(prompt("Más?")!="no")
+    document.getElementById("rioOut").innerHTML = al
+}
+
+function presion() {
+    let s = Number(document.getElementById("sis").value)
+    let d = Number(document.getElementById("dia").value)
+    let r=""
+    if(s<120 && d<80) r="Normal"
+    else if(s<130 && d<80) r="Elevada"
+    else if(s<140 || d<90) r="HTA grado 1"
+    else r="HTA grado 2"
+    document.getElementById("presOut").innerHTML = r
+}
+
+function tempPac() {
+    let c = Number(document.getElementById("tempCant").value)
+    let sum=0
+    for(let i=1;i<=c;i++){
+        sum+=Number(prompt("Temp "+i))
+    }
+    document.getElementById("tempOut").innerHTML = "Promedio: "+(sum/c)
+}
+
+function fiebre() {
+    let cont=0
+    let t = Number(prompt("Temp"))
+    while(t!=0){
+        if(t>=38) cont++
+        t = Number(prompt("Temp"))
+    }
+    document.getElementById("fiebreOut").innerHTML = cont+" con fiebre"
+}
+
+function triage() {
+    let c = Number(document.getElementById("triInp").value)
+    let r=""
+    switch(c){
+        case 1:r="Rojo";break
+        case 2:r="Amarillo";break
+        case 3:r="Verde";break
+        case 4:r="Azul";break
+        default:r="Código inválido"
+    }
+    document.getElementById("triOut").innerHTML = r
+}
+
+function spo2() {
+    let msg="", n
+    do{
+        n = Number(prompt("Saturación"))
+        if(n<95) msg="Posible problema"
+    } while(prompt("Más?")!="no")
+    document.getElementById("spo2Out").innerHTML = msg
+}
+</script>
+
+</body>
+</html>
